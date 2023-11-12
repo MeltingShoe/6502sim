@@ -14,16 +14,16 @@ import inspect
 
 class log:
     def __init__(self):
+        newName = 'lastLog.md'
+        with open(_getPath('currentLog.md'), 'r') as f:
+            log = f.read()
+        with open(_getPath(newName), 'w') as f:
+            f.write(log)
         self.globalLoggingLevel = []
         self.localLoggingLevel = []
         outStr = ('==== --- ==== LOG CREATED: '
                   + _getDateTime() + ' ==== --- ====\n')
-        self._pushGenericLog(outStr)
-        try:
-            os.remove(_getPath("currentLog.md"))
-        except:
-            self._pushGenericLog(
-                '[INFO]: No previous log found, maybe you forgot to save?')
+
         with open(_getPath('currentLog.md'), 'w') as f:
             f.write(outStr)
 

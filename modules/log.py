@@ -33,12 +33,9 @@ class log:
         self._pushGenericLog('[CRASH DATA]: '+str(crashData))
 
     def warning(self, *args):
-        if len(args) == 1:
-            log = args[0]
-        else:
-            log = ''
-        if type(log) != str:
-            log = str(log)
+        log = ''
+        for inLog in args:
+            log += str(inLog)
         flag = True
         flag2 = True
         moduleString, methodString = self._trace()
@@ -67,12 +64,9 @@ class log:
             self._pushGenericLog(out)
 
     def info(self, *args):
-        if len(args) == 1:
-            log = args[0]
-        else:
-            log = ''
-        if type(log) != str:
-            log = str(log)
+        log = ''
+        for inLog in args:
+            log += str(inLog)
         flag = True
         flag2 = True
         moduleString, methodString = self._trace()
@@ -101,12 +95,9 @@ class log:
             self._pushGenericLog(out)
 
     def called(self, *args):
-        if len(args) == 1:
-            log = args[0]
-        else:
-            log = ''
-        if type(log) != str:
-            log = str(log)
+        log = ''
+        for inLog in args:
+            log += str(inLog)
         flag = True
         flag2 = True
         moduleString, methodString = self._trace()
@@ -135,12 +126,9 @@ class log:
             self._pushGenericLog(out)
 
     def debug(self, *args):
-        if len(args) == 1:
-            log = args[0]
-        else:
-            log = ''
-        if type(log) != str:
-            log = str(log)
+        log = ''
+        for inLog in args:
+            log += str(inLog)
         flag = True
         flag2 = True
         moduleString, methodString = self._trace()

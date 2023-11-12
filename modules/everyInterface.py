@@ -1,14 +1,13 @@
 from modules.interface import interface
 from modules import registers as r
 from modules import busses as b
+from modules.PCInterfaces import PCInterface
 
+PC = PCInterface(name='PC')
 DL_DB = interface(r.inputDataReg, b.dataBus, name='DL-DB')
 DL_ADL = interface(r.inputDataReg, b.addressLowBus, name='DL-ADL')
 DL_ADH = interface(r.inputDataReg, b.addressHighBus, name='DL-ADH')
-PCL_DB = interface(r.PCLReg, b.dataBus, name='PCL-DB')
-PCL_ADH = interface(r.PCLReg, b.addressHighBus, name='PCL-ADH')
-PCH_DB = interface(r.PCHReg, b.dataBus, name='PCH-DB')
-PCH_ADL = interface(r.PCHReg, b.addressHighBus, name='PCL-ADH')
+
 S_SB = interface(r.stackPointReg, b.specialBus, name='S-SB')
 S_ADL = interface(r.stackPointReg, b.addressLowBus, name='S-ADL')
 ABH_ADH = interface(r.ABHReg, b.addressHighBus, name='ABH-ADH')

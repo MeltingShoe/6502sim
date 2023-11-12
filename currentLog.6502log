@@ -1,0 +1,17 @@
+from modules.log import logger
+import atexit
+
+
+def main():
+    logger.pushGenericLog('LITTY')
+    logger.eatMyOwnAsshole()
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        logger.pushGenericLog(
+            '[CRITIAL]: There was an error encountered running main(). Exiting...')
+        logger.pushGenericLog('[CRASH DATA]: '+str(e))
+    logger.saveLog()

@@ -1,6 +1,6 @@
 from modules.log import logger
 
-logger.setLoggingLevel(3)
+logger.setLoggingLevel(4)
 
 
 class tessin:

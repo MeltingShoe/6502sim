@@ -32,7 +32,13 @@ class log:
             '[ERROR]: There was an error encountered. Exiting...')
         self._pushGenericLog('[CRASH DATA]: '+str(crashData))
 
-    def warning(self, log):
+    def warning(self, *args):
+        if len(args) == 1:
+            log = args[0]
+        else:
+            log = ''
+        if type(log) != str:
+            log = str(log)
         flag = True
         flag2 = True
         moduleString, methodString = self._trace()
@@ -60,7 +66,13 @@ class log:
                    methodString + '][' + time + ']: ' + log)
             self._pushGenericLog(out)
 
-    def info(self, log):
+    def info(self, *args):
+        if len(args) == 1:
+            log = args[0]
+        else:
+            log = ''
+        if type(log) != str:
+            log = str(log)
         flag = True
         flag2 = True
         moduleString, methodString = self._trace()
@@ -88,7 +100,13 @@ class log:
                    methodString + '][' + time + ']: ' + log)
             self._pushGenericLog(out)
 
-    def called(self):
+    def called(self, *args):
+        if len(args) == 1:
+            log = args[0]
+        else:
+            log = ''
+        if type(log) != str:
+            log = str(log)
         flag = True
         flag2 = True
         moduleString, methodString = self._trace()
@@ -113,10 +131,16 @@ class log:
         if(tLevel <= 2):
             time = _getTime()
             out = ('[CALLED][' + moduleString + '][' +
-                   methodString + '][' + time + ']')
+                   methodString + '][' + time + ']: ' + log)
             self._pushGenericLog(out)
 
-    def debug(self, log):
+    def debug(self, *args):
+        if len(args) == 1:
+            log = args[0]
+        else:
+            log = ''
+        if type(log) != str:
+            log = str(log)
         flag = True
         flag2 = True
         moduleString, methodString = self._trace()

@@ -1,5 +1,0 @@
-===== ----- ===== LOG CREATED: 11/11/2023 15:27:57 ===== ----- ===== 
-[INFO]: No previous log found, maybe you forgot to save it?
-LITTY
-[CRITIAL]: There was an error encountered running main(). Exiting...
-[CRASH DATA]: 'log' object has no attribute 'eatMyOwnAsshole'

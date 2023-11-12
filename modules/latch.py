@@ -73,8 +73,30 @@ class latch:
     def __getitem__(self, item):
         return 1*self._data[item]
 
-    def _toInt(self):
+    def toInt(self):
         return(self._data[0]*128)+(self._data[1]*64)+(self._data[2]*32)+(self._data[3]*16)+(self._data[4]*8)+(self._data[5]*4)+(self._data[6]*2)+(self._data[7]*1)
+
+    def __add__(self, other):
+        carry = False
+        out = []
+        a = self.toInt()
+        b = a + other
+        if(b >= 256):
+            carry = True
+            while b >= 256:
+                b -= 256
+        x = 128
+        i = 0
+        while b > 0:
+            if b >= x:
+                out.append(1)
+                b = b - x
+            else:
+                out.append(0)
+            i += 1
+            x = x // 2
+        logger.info('int processed. _data = '+str(out))
+        return out, carry
 
     def __and__(self, other):
         out = []
@@ -105,38 +127,38 @@ class latch:
         return out
 
     def __lt__(self, other):
-        a = self._toInt()
-        b = other._toInt()
+        a = self.toInt()
+        b = other.toInt()
         logger.info('< output = '+str(a < b))
         return a < b
 
     def __gt__(self, other):
-        a = self._toInt()
-        b = other._toInt()
+        a = self.toInt()
+        b = other.toInt()
         logger.info('> output = '+str(a > b))
         return a > b
 
     def __le__(self, other):
-        a = self._toInt()
-        b = other._toInt()
+        a = self.toInt()
+        b = other.toInt()
         logger.info('<= output = '+str(a <= b))
         return a <= b
 
     def __ge__(self, other):
-        a = self._toInt()
-        b = other._toInt()
+        a = self.toInt()
+        b = other.toInt()
         logger.info('>= output = '+str(a >= b))
         return a >= b
 
     def __eq__(self, other):
-        a = self._toInt()
-        b = other._toInt()
+        a = self.toInt()
+        b = other.toInt()
         logger.info('== output = '+str(a == b))
         return a == b
 
     def __ne__(self, other):
-        a = self._toInt()
-        b = other._toInt()
+        a = self.toInt()
+        b = other.toInt()
         logger.info('!= output = '+str(a != b))
         return a != b
 

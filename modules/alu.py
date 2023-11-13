@@ -19,8 +19,9 @@ class ALU:
             sumOut, carry = self._fullAdder(ina, inb, carry)
             out[i] = sumOut
             i -= 1
-        r.sumReg.setData(out)
-        r.flagReg.setData(r.flagReg.getData()[:-1]+[carry])
+        # r.sumReg.setData(out)
+        # r.flagReg.setCarry(carry)
+        # r.flagReg.setOverflow(overflow)
         logger.info('addition: ', out)
 
     def aluAnd(self):
@@ -46,8 +47,19 @@ class ALU:
             out[i] = ina | inb
             i -= 1
         r.sumReg.setData(out)
-        r.flagReg.setData(r.flagReg.getData()[:-1]+[carry])
-        logger.info('and: ', out)
+        logger.info('or: ', out)
+
+    def aluXor(self):
+        logger.called()
+        i = 7
+        out = [0, 0, 0, 0, 0, 0, 0, 0]
+        while(i >= 0):
+            ina = r.aInReg.getData()[i]
+            inb = r.bInReg.getData()[i]
+            out[i] = ina ^ inb
+            i -= 1
+        r.sumReg.setData(out)
+        logger.info('xor: ', out)
 
     def _fullAdder(self, a, b, c):
         x1 = a ^ b

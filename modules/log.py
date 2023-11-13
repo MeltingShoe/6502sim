@@ -27,10 +27,10 @@ class log:
         with open(_getPath('currentLog.md'), 'w') as f:
             f.write(outStr)
 
-    def error(self, crashData):
+    def error(self, error, traceBack):
         self._pushGenericLog(
-            '[ERROR]: There was an error encountered. Exiting...')
-        self._pushGenericLog('[CRASH DATA]: '+str(crashData))
+            '[ERROR]: '+str(error))
+        self._pushGenericLog('[CRASH DATA]: '+str(traceBack))
 
     def warning(self, *args):
         log = ''

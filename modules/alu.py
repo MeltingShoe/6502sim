@@ -5,23 +5,28 @@ logger.setLoggingLevel(2)
 
 
 class ALU:
-    def __init__(self):
+    def __init__(self, AI, BI, ADD, flagReg, cSignals):
+        self.AI = AI
+        self.BI = BI
+        self.ADD = ADD
+        self.flagReg = flagReg
+        self.cSignals = cSignals
         logger.info('ALU initialized')
 
     def add(self):
         logger.called()
         i = 7
         out = [0, 0, 0, 0, 0, 0, 0, 0]
-        carry = r.flagReg.getData()[7]
+        carry = self.flagReg.getData()[7]
         while(i >= 0):
-            ina = r.aInReg.getData()[i]
-            inb = r.bInReg.getData()[i]
+            ina = self.AI.getData()[i]
+            inb = self.BI.getData()[i]
             sumOut, carry = self._fullAdder(ina, inb, carry)
             out[i] = sumOut
             i -= 1
-        # r.sumReg.setData(out)
-        # r.flagReg.setCarry(carry)
-        # r.flagReg.setOverflow(overflow)
+        # self.ADD.setData(out)
+        # self.flagReg.setCarry(carry)
+        # self.flagReg.setOverflow(overflow)
         logger.info('addition: ', out)
 
     def aluAnd(self):
@@ -29,12 +34,12 @@ class ALU:
         i = 7
         out = [0, 0, 0, 0, 0, 0, 0, 0]
         while(i >= 0):
-            ina = r.aInReg.getData()[i]
-            inb = r.bInReg.getData()[i]
+            ina = self.AI.getData()[i]
+            inb = self.BI.getData()[i]
             out[i] = ina & inb
             i -= 1
-        r.sumReg.setData(out)
-        r.flagReg.setData(r.flagReg.getData()[:-1]+[carry])
+        self.ADD.setData(out)
+        self.flagReg.setData(self.flagReg.getData()[:-1]+[carry])
         logger.info('and: ', out)
 
     def aluOr(self):
@@ -42,11 +47,11 @@ class ALU:
         i = 7
         out = [0, 0, 0, 0, 0, 0, 0, 0]
         while(i >= 0):
-            ina = r.aInReg.getData()[i]
-            inb = r.bInReg.getData()[i]
+            ina = self.AI.getData()[i]
+            inb = self.BI.getData()[i]
             out[i] = ina | inb
             i -= 1
-        r.sumReg.setData(out)
+        self.ADD.setData(out)
         logger.info('or: ', out)
 
     def aluXor(self):
@@ -54,11 +59,11 @@ class ALU:
         i = 7
         out = [0, 0, 0, 0, 0, 0, 0, 0]
         while(i >= 0):
-            ina = r.aInReg.getData()[i]
-            inb = r.bInReg.getData()[i]
+            ina = self.AI.getData()[i]
+            inb = self.BI.getData()[i]
             out[i] = ina ^ inb
             i -= 1
-        r.sumReg.setData(out)
+        self.ADD.setData(out)
         logger.info('xor: ', out)
 
     def _fullAdder(self, a, b, c):

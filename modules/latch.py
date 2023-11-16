@@ -5,6 +5,11 @@ logger.setLoggingLevel(4)
 
 class latch:
     def __init__(self):
+        # the flag has multiple uses. For busses it's set when something writes
+        # to the bus so readers know if the information has been updated yet
+        # for registers it's set once an operation has been completed
+        # so registers that are only controlled by the clock only run once
+        self.flag = False
         self._data = [0, 0, 0, 0, 0, 0, 0, 0]
         self.index = 0
         logger.called('Initiated a latch')

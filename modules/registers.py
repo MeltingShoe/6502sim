@@ -1,21 +1,11 @@
 from modules.latch import latch
 
 predecodeReg = latch()
-dataOutputReg = latch()
-inputDataReg = latch()
-PCLSReg = latch()
-PCLReg = latch()
-PCHSReg = latch()
-PCHReg = latch()
-ABHReg = latch()
-ABLReg = latch()
+
+
 stackPointReg = latch()
-bInReg = latch()
-sumReg = latch()
-aInReg = latch()
-regX = latch()
-regY = latch()
-acc = latch()
+
+
 flagReg = latch()
 instructionReg = latch()
 stepReg = latch()

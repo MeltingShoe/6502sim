@@ -6,6 +6,11 @@ logger.setLoggingLevel(3)
 
 
 class flagReg(latch):
+    def __init__(self, DB, cSignals):
+        super().__init__()
+        self.SB = DB
+        self.cSignals = cSignals
+
     def getCFlag(self):
         logger.called(self._data[7])
         return self._data[7]

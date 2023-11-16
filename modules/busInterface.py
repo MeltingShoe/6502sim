@@ -2,7 +2,7 @@ from modules.log import logger
 
 
 class busInterface:
-    def __init__(self, DOR, DL, ABH, ABL, DB, ADL, ADH, exDB, exABH, exABL, name=''):
+    def __init__(self, DOR, DL, ABH, ABL, DB, ADL, ADH, exDB, exABH, exABL, DB_PASS, ADH_PASS name=''):
         self.DOR = DOR
         self.DL = DL
         self.ABH = ABH

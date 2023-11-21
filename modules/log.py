@@ -25,11 +25,15 @@ import time
 
 class log:
     def __init__(self):
+        self.lastFlags = ''
+        self.numDupes = 0
+        self.frequency = {}
+        self.stacklist = []
         self.temp = 0
         self.moduleLoggingLevel = []
         self.localLoggingLevel = []
         self.setLoggingLevel(3)
-        self.lineLen = 80
+        self.lineLen = 65
         self.maxBuffer = 1
         self.writeInterval = 0.1  # interval in seconds between writing the buffer
         self.lastWrite = time.time()
@@ -58,7 +62,7 @@ class log:
             log += ' '
         flag = True
         flag2 = True
-        moduleString, methodString = self._trace()
+        moduleString, lineNumString, methodString = self._trace()
         i = 0
         tLevel = 0
         for item in self.localLoggingLevel:
@@ -79,8 +83,18 @@ class log:
             self._pushGenericLog('[INFO]: Log level not set, defaulting to 3')
         if(tLevel <= level):
             time = _getTime()
-            out = (self.levels[level-1] + moduleString +
-                   methodString + time + log)
+            flags = (self.levels[level-1] +
+                     moduleString + lineNumString + methodString)
+            if flags == self.lastFlags and self.numDupes < 10:
+                outFlags = ''
+                time = '-> '
+                self.numDupes += 1
+            else:
+                outFlags = flags
+                self.numDupes = 0
+            self.lastFlags = flags
+
+            out = (outFlags + time + log)
             self._pushGenericLog(out)
         if level >= 4:
             self.forceUpdate()
@@ -174,8 +188,8 @@ class log:
         self._parseLog(1, *args)
 
     def setLoggingLevel(self, level):
-        moduleString, methodString = self._trace()
-        if methodString == '<module>':
+        moduleString, lineNumString, methodString = self._trace()
+        if methodString == '<<module>>':
             outTuple = (moduleString, level)
             self.moduleLoggingLevel.append(outTuple)
         else:
@@ -183,41 +197,40 @@ class log:
             self.localLoggingLevel.append(outTuple)
 
     def _trace(self):
-        x = len(inspect.stack())
-        self.temp += 1
-        x -= 1
-        x == 0
-        try:
-            x = inspect.stack([len(inspect.stack())-2][3])
-        except:
-            x = str(inspect.stack()[len(inspect.stack())-1][1])
-        fName = x
-        print(fName)
-        index = len(fName) - 1
-        character = fName[index]
-        while(character != '.'):
-            character = fName[index]
-            index -= 1
-        end = index + 1
-        while(character != '\\'):
-            character = fName[index]
-            index -= 1
-        start = index + 2
-        moduleString = fName[start:end]
+        stack = inspect.stack()
+        i = 0
+        moduleString = ''
+        lineNumString = ''
+        methodString = ''
 
-        methodString = str(inspect.stack()[len(inspect.stack())-1][3])
-        lineNumString = str(inspect.stack()[len(inspect.stack())-1][2])
-        return '<'+moduleString+'~' + lineNumString+'>', '<'+methodString+'>'
+        if len(stack) in self.frequency:
+            # incrementing the counr
+            self.frequency[len(stack)] += 1
+        else:
+            self.frequency[len(stack)] = 1
+        if len(stack) < 11:
+            for frame in stack:
+                if frame[1] == 'C:\\Users\\melti\\Desktop\\git\\6502sim\\modules\\log.py':
+                    continue
+                else:
+                    methodString = str(frame[3])
+                    lineNumString = str(frame[2])
+                    i = 0
+                    start = 0
+                    while i < len(frame[1]):
+                        if(frame[1][i] == '\\'):
+                            start = i+1
+                        i += 1
+                    moduleString = frame[1][start:]
+                    break
+        return '<'+moduleString, ' ::' + lineNumString + '>', '<'+methodString+'>'
 
     def _pushGenericLog(self, log):
-        if log[0] != '[' and log[0] != '=':
-            log = '[GENERIC LOG]: ' + log
-            self._pushGenericLog(
-                '[INFO]: Untagged log found. Possible error. Tag logs to improve readability.')
+        inStr = log
         word = ''
         line = ''
         out = ''
-        for character in log:
+        for character in inStr:
             word += character
             if character == '\n':
                 word = word[-1]

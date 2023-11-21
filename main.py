@@ -12,7 +12,7 @@ import traceback
 import math
 import time
 
-logger.setLoggingLevel(1)
+logger.setLoggingLevel(4)
 
 
 # ============TODO===================
@@ -54,17 +54,15 @@ def main():
     logger.info('ALU output: ', out)
 
 
-print('AAAAAAAAAAAAAAA================AAAAAAAAAAAAAAAAAAAAA==========================AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA======================================AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA======================================AAAAAAAAAAAAAAAAAAAAAAAAAAAA')
-print(logger.renderFancyLine(27))
 logger.info(logger.renderFancyLine(27))
 
 
 def run():
     logger.info(logger.renderFancyLine(73))
     try:
-        for i in range(0, 12):
-            logger.info(logger.renderFancyLine(i))
-            time.sleep(0.01)
+        for i in range(0, 100):
+
+            # time.sleep(0.01)
 
             logger.update()
         main()

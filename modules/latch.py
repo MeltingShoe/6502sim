@@ -4,7 +4,9 @@ logger.setLoggingLevel(4)
 
 
 class latch:
+
     def __init__(self):
+
         # the flag has multiple uses. For busses it's set when something writes
         # to the bus so readers know if the information has been updated yet
         # for registers it's set once an operation has been completed
